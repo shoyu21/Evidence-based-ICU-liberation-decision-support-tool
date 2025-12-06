@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARISE - ICU Liberation Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* ARISE v2.8 - Clinical Professional + Clean Typography */
+:root {
+    --color-primary: #0f766e;
+    --color-primary-light: #14b8a6;
+    --color-primary-bg: #ccfbf1;
+    --color-success: #059669;
+    --color-success-bg: #d1fae5;
+    --color-warning: #d97706;
+    --color-warning-bg: #fef3c7;
+    --color-danger: #dc2626;
+    --color-danger-bg: #fee2e2;
+    --color-info: #0891b2;
+    --color-purple: #7c3aed;
+    --color-purple-bg: #ede9fe;
+    
+    --bg-primary: #f8fafa;
+    --bg-card: #ffffff;
+    --bg-section: #f1f5f5;
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    
+    --border-color: #e2e8f0;
+    --border-radius: 12px;
+    --border-radius-lg: 16px;
+    
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(15, 118, 110, 0.08);
+    --shadow-lg: 0 8px 24px rgba(15, 118, 110, 0.12);
+    
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container { 
+    max-width: 680px; 
+    margin: 0 auto; 
+    padding: var(--spacing-lg); 
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.header h1 { 
+    font-size: 2.2rem; 
+    font-weight: 700; 
+    color: var(--color-primary);
+    letter-spacing: -1px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.header .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.evidence-badge { 
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-primary-bg); 
+    color: var(--color-primary); 
+    font-size: 0.75rem; 
+    font-weight: 600;
+    padding: 6px 12px; 
+    border-radius: 20px;
+    margin-top: var(--spacing-md);
+    letter-spacing: 0.3px;
+}
+
+.evidence-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+}
+
+/* Mode Tabs */
+.mode-selector { 
+    display: flex; 
+    gap: var(--spacing-sm); 
+    margin-bottom: var(--spacing-xl);
+    background: var(--bg-card);
+    padding: 6px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.mode-btn {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-sm);
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.mode-btn:hover { 
+    background: var(--bg-section);
+    color: var(--text-primary);
+}
+
+.mode-btn.active { 
+    background: var(--color-primary); 
+    color: white;
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3);
+}
+
+.mode-btn.active-sbt { 
+    background: var(--color-purple); 
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+
+.mode-btn.active-full { 
+    background: var(--color-success);
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.mode-btn small {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* Status Box */
+.status-box {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.2px;
+    border: 2px solid transparent;
+}
+
+.status-box.neutral {
+    background: var(--bg-section);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.status-box.success {
+    background: var(--color-success-bg);
+    color: #065f46;
+    border-color: var(--color-success);
+}
+
+.status-box.danger {
+    background: var(--color-danger-bg);
+    color: #991b1b;
+    border-color: var(--color-danger);
+}
+
+.status-box.purple {
+    background: var(--color-purple-bg);
+    color: #5b21b6;
+    border-color: var(--color-purple);
+}
+
+/* Form Sections */
+.form-section {
+    background: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(15, 118, 110, 0.08);
+}
+
+.section-header {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.section-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Checkbox Items */
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-section);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 2px solid transparent;
+}
+
+.checkbox-item:hover { 
+    background: #e8f0f0;
+}
+
+.checkbox-item .check-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-item .check-circle svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.checkbox-item input[type="checkbox"] { 
+    display: none;
+}
+
+.checkbox-item .label-text {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.checkbox-item.checked {
+    background: var(--color-danger-bg);
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+.checkbox-item.checked .check-circle {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.checkbox-item.checked .check-circle svg {
+    opacity: 1;
+    stroke: white;
+}
+
+.checkbox-item.checked .label-text {
+    color: #991b1b;
+}
+
+/* Yes-check style (green when checked) */
+.checkbox-item.yes-check {
+    background: var(--color-warning-bg);
+    border-color: rgba(217, 119, 6, 0.3);
+}
+
+.checkbox-item.yes-check .check-circle {
+    border-color: var(--color-warning);
+}
+
+.checkbox-item.yes-check.checked {
+    background: var(--color-success-bg);
+    border-color: rgba(5, 150, 105, 0.3);
+}
+
+.checkbox-item.yes-check.checked .check-circle {
+    background: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.checkbox-item.yes-check.checked .label-text {
+    color: #065f46;
+}
+
+/* Risk-check style (amber when checked) */
+.checkbox-item.risk-check.checked {
+    background: var(--color-warning-bg);
+    border-color: rgba(217, 119, 6, 0.3);
+}
+
+.checkbox-item.risk-check.checked .check-circle {
+    background: var(--color-warning);
+    border-color: var(--color-warning);
+}
+
+.checkbox-item.risk-check.checked .label-text {
+    color: #92400e;
+}
+
+/* Info Button - Subtle outline style */
+.info-btn {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 0.6rem;
+    font-weight: 600;
+    border: 1.5px solid #cbd5e1;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-btn:hover { 
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-bg);
+}
+
+/* Evidence Box */
+.evidence-box {
+    display: none;
+    background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+    border-left: 3px solid var(--color-primary);
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0 var(--spacing-sm) 38px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    border-radius: 0 10px 10px 0;
+    line-height: 1.5;
+}
+
+.evidence-box.show { display: block; }
+.evidence-box strong { color: var(--color-primary); font-weight: 600; }
+.evidence-box .cite { 
+    display: block;
+    font-style: italic; 
+    color: var(--text-muted); 
+    font-size: 0.75rem;
+    margin-top: var(--spacing-sm);
+}
+
+/* Input Grid */
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 500px) {
+    .input-grid { grid-template-columns: 1fr; }
+}
+
+.input-item label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-item input, .input-item select {
+    width: 100%;
+    padding: 12px var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-item input:focus, .input-item select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+.input-item .hint { 
+    font-size: 0.75rem; 
+    color: var(--text-muted); 
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Calculation Display */
+.calc-display {
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #e6fffa 100%);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin-top: var(--spacing-md);
+    border: 1px solid rgba(15, 118, 110, 0.15);
+}
+
+.calc-display .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calc-display .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin: var(--spacing-xs) 0;
+}
+
+.calc-display .value.good { color: var(--color-success); }
+.calc-display .value.warning { color: var(--color-warning); }
+.calc-display .value.danger { color: var(--color-danger); }
+
+.calc-display .hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-xl) 0;
+}
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary { 
+    background: var(--color-primary); 
+    color: white;
+    box-shadow: 0 4px 14px rgba(15, 118, 110, 0.35);
+}
+
+.btn-primary:hover { 
+    background: #0d6d66;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.4);
+}
+
+.btn-secondary { 
+    background: var(--bg-section); 
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover { 
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+}
+
+/* Results */
+.results { margin-top: var(--spacing-lg); }
+
+.decision-box {
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.decision-box.success { 
+    background: var(--color-success-bg); 
+    border: 2px solid var(--color-success);
+}
+
+.decision-box.success h2 { color: #065f46; }
+
+.decision-box.danger { 
+    background: var(--color-danger-bg); 
+    border: 2px solid var(--color-danger);
+}
+
+.decision-box.danger h2 { color: #991b1b; }
+
+.decision-box h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.5px;
+}
+
+.decision-box p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.result-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.result-card h3 { 
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-md);
+}
+
+.result-card.success { border-left: 4px solid var(--color-success); }
+.result-card.danger { border-left: 4px solid var(--color-danger); }
+.result-card.info { border-left: 4px solid var(--color-primary); }
+
+.result-card ol, .result-card ul { 
+    margin-left: var(--spacing-lg); 
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.result-card li { 
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.5;
+}
+
+/* Risk Summary */
+.risk-summary {
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    border: 2px solid transparent;
+}
+
+.risk-summary.standard { 
+    background: var(--color-success-bg); 
+    border-color: var(--color-success);
+}
+
+.risk-summary.high-risk { 
+    background: var(--color-warning-bg); 
+    border-color: var(--color-warning);
+}
+
+.risk-summary.very-high-risk { 
+    background: var(--color-danger-bg); 
+    border-color: var(--color-danger);
+}
+
+.risk-count { 
+    font-size: 2.5rem; 
+    font-weight: 700;
+    line-height: 1;
+}
+
+.risk-level { 
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: var(--spacing-sm) 0;
+}
+
+.risk-recommendation { 
+    font-size: 0.85rem; 
+    color: var(--text-secondary);
+}
+
+/* Airway Alert */
+.airway-alert {
+    background: var(--color-danger-bg);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.airway-alert h4 { 
+    color: #991b1b; 
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.9rem;
+}
+
+.airway-alert ul { 
+    margin-left: var(--spacing-lg);
+    color: #991b1b;
+}
+
+.airway-alert li { 
+    margin-bottom: var(--spacing-xs); 
+    font-size: 0.85rem;
+}
+
+/* Extubation Plan */
+.extubation-plan {
+    background: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    margin-top: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(15, 118, 110, 0.08);
+}
+
+.extubation-plan h3 { 
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.plan-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-section);
+    border-radius: 10px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.plan-step {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.plan-content h4 { 
+    font-size: 0.9rem; 
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.plan-content p { 
+    font-size: 0.82rem; 
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Auto Badge */
+.auto-badge {
+    display: inline-block;
+    background: var(--color-warning);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: var(--spacing-xs);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.footer strong { color: var(--color-primary); }
+.disclaimer { 
+    font-style: italic; 
+    margin-top: var(--spacing-xs);
+    font-size: 0.75rem;
+}
+
+.hidden { display: none !important; }
+
+@media (max-width: 480px) {
+    .container { padding: var(--spacing-md); }
+    .header h1 { font-size: 1.8rem; }
+    .form-section { padding: var(--spacing-lg); }
+    .mode-btn { padding: var(--spacing-sm); font-size: 0.8rem; }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>ARISE</h1>
+            <p class="subtitle">Awakening & Respiratory Integration for Safe Extubation</p>
+            <span class="evidence-badge">Evidence-Based Thresholds</span>
+        </header>
+
+        <!-- Mode Selection -->
+        <div class="mode-selector">
+            <button class="mode-btn active" id="mode-sat" onclick="setMode('sat')">
+                SAT Screen
+                <small>7am Nurse</small>
+            </button>
+            <button class="mode-btn" id="mode-sbt" onclick="setMode('sbt')">
+                SBT Screen
+                <small>8am RT</small>
+            </button>
+            <button class="mode-btn" id="mode-full" onclick="setMode('full')">
+                Full Assessment
+                <small>Pre-Extubation</small>
+            </button>
+        </div>
+
+        <!-- Status Box -->
+        <div class="status-box neutral" id="status-box">
+            Complete SAT exclusion screening below
+        </div>
+
+        <!-- ========== QUICK SAT MODE ========== -->
+        <div id="sat-mode">
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">SAT Exclusion Criteria</div>
+                    <div class="section-subtitle">Patient excluded from SAT if any box is checked</div>
+                </div>
+                
+                <div class="checkbox-list">
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_dying">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Dying or palliative</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-dying')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-dying">
+                        <strong>End-of-Life / Comfort Care</strong><br>
+                        Goals of care focused on comfort rather than liberation. Awakening may cause unnecessary distress without benefit.
+                        <span class="cite">MICU Protocol 2025; PADIS Guidelines 2018</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_fio2">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">FiO2 >60% or respiratory distress</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-fio2')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-fio2">
+                        <strong>Threshold: FiO2 >60%</strong><br>
+                        Safety-driven consensus threshold. Patients requiring >60% FiO2 are at higher risk for hypoxemia during sedation interruption.
+                        <span class="cite">Eskesen 2018; Grissom 2023; ABC Trial (Girard 2008)</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_prone">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Prone positioning</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-prone')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-prone">
+                        <strong>Prone Positioning = SAT Exclusion</strong><br>
+                        Patients require deep sedation during prone positioning to prevent movement, line displacement, and accidental extubation.
+                        <span class="cite">PROSEVA Trial; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_arrhythmia">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Uncontrolled cardiac arrhythmia/ischemia</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-cardiac')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-cardiac">
+                        <strong>Cardiac Instability = SAT Exclusion</strong><br>
+                        Awakening increases sympathetic drive and myocardial oxygen demand. Can extend infarct size and precipitate arrhythmias.
+                        <span class="cite">ABC Trial (Girard 2008); MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_seizure">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Ongoing seizure activity / status epilepticus</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-seizure')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-seizure">
+                        <strong>Active Seizures = SAT Exclusion</strong><br>
+                        Uncontrolled seizures require ongoing sedation for seizure control. Wait until seizure-free for 24h before SAT attempt.
+                        <span class="cite">MICU Protocol 2025; Neurocritical Care Guidelines</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_agitation">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">RASS +3/+4 (severe agitation)</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-agitation')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-agitation">
+                        <strong>RASS +3/+4 = SAT Exclusion</strong><br>
+                        Severe agitation poses safety risks. May cause self-extubation, line dislodgement, or injury. Address underlying cause first.
+                        <span class="cite">PADIS Guidelines 2018; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_withdrawal">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Alcohol withdrawal syndrome</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-withdrawal')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-withdrawal">
+                        <strong>Severe Withdrawal = SAT Exclusion</strong><br>
+                        Alcohol/drug withdrawal with autonomic instability requires continued sedation to prevent seizures and CV complications.
+                        <span class="cite">CIWA Protocol; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_pain">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Uncontrolled pain</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-pain')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-pain">
+                        <strong>Uncontrolled Pain (CPOT ≥3) = SAT Exclusion</strong><br>
+                        Pain must be addressed before stopping sedation. Optimize analgesia first (analgesia-first approach per PADIS).
+                        <span class="cite">PADIS Guidelines 2018; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_paralytic">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Paralytic infusion / neuromuscular blockade</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-paralytic')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-paralytic">
+                        <strong>CRITICAL: NMB = Absolute SAT Contraindication</strong><br>
+                        Stopping sedation while paralyzed causes awareness without ability to move — severe psychological trauma. Wait ≥4h after NMB stopped.
+                        <span class="cite">MICU Protocol 2025; PADIS Guidelines 2018</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_icp">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Active ICP management / EVD</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-icp')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-icp">
+                        <strong>Elevated ICP = SAT Exclusion</strong><br>
+                        Agitation and coughing during awakening sharply increase ICP. Risk of herniation. Reassess when ICP <20 mmHg stable for 24h.
+                        <span class="cite">Neurocritical Care Guidelines; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_hypothermia">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Therapeutic hypothermia / rewarming</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-hypothermia')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-hypothermia">
+                        <strong>TTM = SAT Exclusion</strong><br>
+                        Targeted temperature management requires sedation to prevent shivering. Reassess 24h after normothermia achieved.
+                        <span class="cite">TTM Guidelines; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item" onclick="toggleCheck(this, 'exclusion')">
+                        <input type="checkbox" name="sat_procedure">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Planned for procedure/operation</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-procedure')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-procedure">
+                        <strong>Procedure Today = Defer SAT</strong><br>
+                        Patient will need re-sedation for procedure. Starting then stopping SAT is unnecessarily disruptive. Defer to next day.
+                        <span class="cite">MICU Protocol 2025</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="assessSAT()">Assess SAT Eligibility</button>
+                <button class="btn-secondary" onclick="resetSAT()">Reset</button>
+            </div>
+
+            <div class="results" id="sat-results"></div>
+        </div>
+
+        <!-- ========== QUICK SBT MODE ========== -->
+        <div id="sbt-mode" class="hidden">
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">SBT Readiness Parameters</div>
+                    <div class="section-subtitle">All criteria must be met for SBT</div>
+                </div>
+                
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>FiO2 (%)
+                            <button class="info-btn" onclick="toggleEvidence('ev-sbt-fio2')">i</button>
+                        </label>
+                        <input type="number" id="sbt-fio2" value="40" min="21" max="100" onchange="updateSBT()">
+                        <span class="hint">Target: ≤40%</span>
+                    </div>
+                    <div class="input-item">
+                        <label>PEEP (cmH2O)
+                            <button class="info-btn" onclick="toggleEvidence('ev-sbt-peep')">i</button>
+                        </label>
+                        <input type="number" id="sbt-peep" value="8" min="0" max="20" onchange="updateSBT()">
+                        <span class="hint">Target: ≤8</span>
+                    </div>
+                    <div class="input-item">
+                        <label>PaO2 (mmHg)
+                            <button class="info-btn" onclick="toggleEvidence('ev-pf')">i</button>
+                        </label>
+                        <input type="number" id="sbt-pao2" value="100" min="40" max="500" onchange="updateSBT()">
+                        <span class="hint">From ABG</span>
+                    </div>
+                    <div class="input-item">
+                        <label>Norad (mcg/kg/min)
+                            <button class="info-btn" onclick="toggleEvidence('ev-norad')">i</button>
+                        </label>
+                        <input type="number" id="sbt-norad" value="0" min="0" max="1" step="0.01" onchange="updateSBT()">
+                        <span class="hint">Target: <0.1</span>
+                    </div>
+                </div>
+
+                <div class="evidence-box" id="ev-sbt-fio2">
+                    <strong>FiO2 ≤40%</strong><br>
+                    Ensures adequate oxygenation reserve during SBT. Higher requirements suggest ongoing respiratory failure.
+                    <span class="cite">ATS/CHEST Guidelines 2017; Boles 2007</span>
+                </div>
+                <div class="evidence-box" id="ev-sbt-peep">
+                    <strong>PEEP ≤8 cmH₂O</strong><br>
+                    Conservative consensus standard ensuring minimal ventilatory support before testing spontaneous breathing.
+                    <span class="cite">Martínez 2024; Subirà 2024; Burns 2024</span>
+                </div>
+                <div class="evidence-box" id="ev-pf">
+                    <strong>P/F Ratio >150</strong><br>
+                    Reflects oxygenation efficiency. Values ≤150 indicate moderate-severe hypoxemia and predict higher SBT failure rates.
+                    <span class="cite">ARDS Definition Task Force; ATS/CHEST 2017</span>
+                </div>
+                <div class="evidence-box" id="ev-norad">
+                    <strong>Norad <0.1 mcg/kg/min</strong><br>
+                    Evidence-based "low-dose" threshold. Extubation at ≤0.1 shows no increased reintubation risk.
+                    <span class="cite">Zarrabian 2022; De Jong 2025</span>
+                </div>
+
+                <div class="calc-display">
+                    <div class="label">P/F Ratio</div>
+                    <div class="value good" id="sbt-pf-value">250</div>
+                    <div class="hint">Target: >150</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Clinical Readiness Checks</div>
+                    <div class="section-subtitle">All must be confirmed for SBT</div>
+                </div>
+                
+                <div class="checkbox-list">
+                    <label class="checkbox-item yes-check" onclick="toggleCheck(this, 'yes')">
+                        <input type="checkbox" name="sbt_improving">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Underlying condition improving</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-improving')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-improving">
+                        <strong>Resolution of Primary Pathology</strong><br>
+                        SBT should only be attempted when initial reason for intubation is resolving. Is pneumonia improving? Pulmonary edema resolving? Sepsis controlled?
+                        <span class="cite">Boles 2007; ATS/CHEST Guidelines 2017; MICU Protocol 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item yes-check" onclick="toggleCheck(this, 'yes')">
+                        <input type="checkbox" name="sbt_cough">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Good cough and gag reflex</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-cough-gag')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-cough-gag">
+                        <strong>Airway Protection Assessment</strong><br>
+                        Weak/absent cough (negative white card test) strongly predicts extubation failure. Indicates inability to clear secretions and protect airway.
+                        <span class="cite">Elkholy 2021; Saltürk 2016; Thille 2016</span>
+                    </div>
+                    
+                    <label class="checkbox-item yes-check" onclick="toggleCheck(this, 'yes')">
+                        <input type="checkbox" name="sbt_suction">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Suctioning ≤Q3-4h (not frequent)</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-suction')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-suction">
+                        <strong>Suctioning >Q2h (>12×/24h) = HIGH RISK</strong><br>
+                        High secretion burden strongly predicts extubation failure with OR 10.65.
+                        <span class="cite">Haruna 2022; Hattori 2025; Cheng 2024</span>
+                    </div>
+                    
+                    <label class="checkbox-item yes-check" onclick="toggleCheck(this, 'yes')">
+                        <input type="checkbox" name="sbt_gcs">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">GCS stable (E4VTM5-6)</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-gcs')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-gcs">
+                        <strong>Neurological Readiness</strong><br>
+                        GCS E4VTM5-6 indicates patient can open eyes spontaneously, follow commands, intact motor function. Lower GCS = impaired airway protection.
+                        <span class="cite">VISAGE Score; ExPreS Score; MICU Protocol 2025</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="assessSBT()">Assess SBT Readiness</button>
+                <button class="btn-secondary" onclick="resetSBT()">Reset</button>
+            </div>
+
+            <div class="results" id="sbt-results"></div>
+        </div>
+
+        <!-- ========== FULL ASSESSMENT MODE ========== -->
+        <div id="full-mode" class="hidden">
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Patient Parameters</div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>Height (cm)</label>
+                        <input type="number" id="height" value="170" min="100" max="220" onchange="updateCalculations()">
+                    </div>
+                    <div class="input-item">
+                        <label>Weight (kg)</label>
+                        <input type="number" id="weight" value="70" min="30" max="300" onchange="updateCalculations()">
+                    </div>
+                    <div class="input-item">
+                        <label>Age (years)</label>
+                        <input type="number" id="age" value="60" min="18" max="120" onchange="updateCalculations()">
+                    </div>
+                    <div class="input-item">
+                        <label>MV Days
+                            <button class="info-btn" onclick="toggleEvidence('ev-mv-days')">i</button>
+                        </label>
+                        <input type="number" id="mv-days" value="3" min="1" max="100" onchange="updateCalculations()">
+                        <span class="hint">Flag: ≥7 days</span>
+                    </div>
+                </div>
+                <div class="evidence-box" id="ev-mv-days">
+                    <strong>Prolonged MV Definition:</strong><br>
+                    ≥7 days = prolonged weaning risk | ≥14-21 days = prolonged MV (NAMDRC)
+                    <span class="cite">ERS/WIND Guidelines; Trudzinski 2022</span>
+                </div>
+                <div class="calc-display" style="margin-top: var(--spacing-md);">
+                    <div class="label">BMI</div>
+                    <div class="value" id="bmi-value">24.2</div>
+                    <div class="hint">Flag: >30 (obesity risk)</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Respiratory Parameters</div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>FiO2 (%)</label>
+                        <input type="number" id="full-fio2" value="40" min="21" max="100" onchange="updateCalculations()">
+                        <span class="hint">Target: ≤40%</span>
+                    </div>
+                    <div class="input-item">
+                        <label>PEEP</label>
+                        <input type="number" id="full-peep" value="8" min="0" max="20" onchange="updateCalculations()">
+                        <span class="hint">Target: ≤8</span>
+                    </div>
+                    <div class="input-item">
+                        <label>PaO2 (mmHg)</label>
+                        <input type="number" id="full-pao2" value="100" min="40" max="500" onchange="updateCalculations()">
+                    </div>
+                    <div class="input-item">
+                        <label>Norad (mcg/kg/min)</label>
+                        <input type="number" id="full-norad" value="0" min="0" max="1" step="0.01" onchange="updateCalculations()">
+                        <span class="hint">Target: <0.1</span>
+                    </div>
+                </div>
+                <div class="calc-display">
+                    <div class="label">P/F Ratio</div>
+                    <div class="value good" id="full-pf-value">250</div>
+                    <div class="hint">Target: >150</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Weaning History</div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>Failed SBT Count
+                            <button class="info-btn" onclick="toggleEvidence('ev-failed-sbt')">i</button>
+                        </label>
+                        <select id="failed-sbt" onchange="updateCalculations()">
+                            <option value="0">0 - First attempt</option>
+                            <option value="1">1 - One prior failure</option>
+                            <option value="2">2 - Two prior failures</option>
+                            <option value="3">3+ - Multiple failures</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label>Suction Frequency
+                            <button class="info-btn" onclick="toggleEvidence('ev-suction-freq')">i</button>
+                        </label>
+                        <select id="suction-freq" onchange="updateCalculations()">
+                            <option value="q4">Q4h or less (low)</option>
+                            <option value="q3">Q3h (moderate)</option>
+                            <option value="q2">Q2h (high)</option>
+                            <option value="q1">Q1h or more (very high)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="evidence-box" id="ev-failed-sbt">
+                    <strong>≥2 Failed SBTs = Difficult Weaning</strong><br>
+                    Consider tracheostomy discussion, optimize nutrition/rehabilitation.
+                    <span class="cite">WIND Classification; Schönhofer 2020</span>
+                </div>
+                <div class="evidence-box" id="ev-suction-freq">
+                    <strong>Suctioning Frequency & Risk:</strong><br>
+                    Q4h+ = Low risk | Q2h = High risk (OR 10.65) | Q1h = Very high risk
+                    <span class="cite">Haruna 2022; Cheng 2024</span>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Metabolic Parameters</div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>pH (arterial)
+                            <button class="info-btn" onclick="toggleEvidence('ev-ph')">i</button>
+                        </label>
+                        <input type="number" id="ph" value="7.40" min="6.8" max="7.8" step="0.01" onchange="updateCalculations()">
+                        <span class="hint">Target: ≥7.30</span>
+                    </div>
+                    <div class="input-item">
+                        <label>Hemoglobin (g/dL)
+                            <button class="info-btn" onclick="toggleEvidence('ev-hb')">i</button>
+                        </label>
+                        <input type="number" id="hb" value="10" min="4" max="20" step="0.1" onchange="updateCalculations()">
+                        <span class="hint">Target: ≥8</span>
+                    </div>
+                    <div class="input-item">
+                        <label>24h Fluid Balance (mL)
+                            <button class="info-btn" onclick="toggleEvidence('ev-fluid')">i</button>
+                        </label>
+                        <input type="number" id="fluid-balance" value="0" min="-5000" max="10000" step="100" onchange="updateCalculations()">
+                        <span class="hint">Target: ≤+1000</span>
+                    </div>
+                </div>
+                <div class="evidence-box" id="ev-ph">
+                    <strong>pH ≥7.30 for safe extubation</strong><br>
+                    Metabolic acidosis impairs respiratory muscle function and increases failure risk.
+                    <span class="cite">Rathish 2025; HACOR score</span>
+                </div>
+                <div class="evidence-box" id="ev-hb">
+                    <strong>Hemoglobin Thresholds:</strong><br>
+                    ≥7-8 g/dL safe for most | ≥8-10 g/dL for high-risk patients
+                    <span class="cite">TRICC trial; Jati 2023</span>
+                </div>
+                <div class="evidence-box" id="ev-fluid">
+                    <strong>Fluid Balance Impact:</strong><br>
+                    >+500 mL/24h = increased risk | >+1000 mL/24h = high specificity for failure (84%)
+                    <span class="cite">Wang 2024; Maezawa 2019</span>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">Airway Assessment</div>
+                </div>
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>ETT Size (mm)</label>
+                        <input type="number" id="ett-size" value="7.5" min="5" max="10" step="0.5" onchange="updateCalculations()">
+                    </div>
+                    <div class="input-item">
+                        <label>Cuff Leak Volume (mL)
+                            <button class="info-btn" onclick="toggleEvidence('ev-cuff')">i</button>
+                        </label>
+                        <input type="number" id="cuff-leak" value="150" min="0" max="500" onchange="updateCalculations()">
+                        <span class="hint">Pass: ≥110 mL</span>
+                    </div>
+                </div>
+                <div class="evidence-box" id="ev-cuff">
+                    <strong>Cuff Leak Test Interpretation:</strong><br>
+                    ≥110 mL = PASS (low stridor risk) | <110 mL = FAIL (consider steroids)
+                    <span class="cite">Kuriyama 2020 meta-analysis</span>
+                </div>
+                
+                <div class="calc-display" id="cuff-result">
+                    <div class="label">Cuff Leak Result</div>
+                    <div class="value good">✓ PASS</div>
+                </div>
+
+                <div class="section-header" style="margin-top: var(--spacing-lg); border-bottom: none; padding-bottom: 0;">
+                    <div class="section-title">Difficult Airway Markers</div>
+                </div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk')">
+                        <input type="checkbox" name="airway_difficult">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Difficult intubation history</span>
+                    </label>
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk')">
+                        <input type="checkbox" name="airway_edema">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Suspected airway edema / head-neck surgery</span>
+                    </label>
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk')">
+                        <input type="checkbox" name="airway_osa">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Known OSA or obesity hypoventilation</span>
+                    </label>
+                </div>
+
+                <div class="airway-alert hidden" id="airway-alert">
+                    <h4>⚠ High-Risk Airway Detected</h4>
+                    <ul>
+                        <li>Consider prophylactic steroids: Methylprednisolone 20-40mg IV q4-6h × 4 doses</li>
+                        <li>Ensure difficult airway equipment at bedside</li>
+                        <li>Senior airway expert present for extubation</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <div class="section-title">High-Risk Extubation Factors
+                        <button class="info-btn" onclick="toggleEvidence('ev-risk-factors')" style="margin-left: 8px;">i</button>
+                    </div>
+                    <div class="section-subtitle">Determines post-extubation support level</div>
+                </div>
+                <div class="evidence-box" id="ev-risk-factors">
+                    <strong>Risk Stratification:</strong><br>
+                    0 factors = Standard O₂ | 1-3 factors = HFNC or NIV | ≥4 factors = NIV strongly recommended
+                    <span class="cite">Hernández 2016; Thille 2019; ERS Guidelines</span>
+                </div>
+                
+                <div class="checkbox-list" id="risk-checklist">
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_age">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Age >65 years</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-age')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-age">
+                        <strong>Age >65: Established Risk Factor</strong><br>
+                        Advanced age consistently predicts extubation failure — decreased respiratory muscle strength and reduced physiologic reserve.
+                        <span class="cite">Thille 2015; Hernández 2016; Villamizar 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_bmi">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">BMI >30 <span id="bmi-auto-flag"></span></span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-bmi')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-bmi">
+                        <strong>BMI ≥30: WHO Obesity</strong><br>
+                        Obesity affects lung mechanics, airway patency, and increases respiratory work.
+                        <span class="cite">De Jong 2024; Pensier 2024; Thille 2021</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_hf">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Heart failure (NYHA II-IV or LVEF <40%)</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-hf')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-hf">
+                        <strong>Heart Failure: Strong Predictor</strong><br>
+                        Severe LV dysfunction independently associated with failure. Removal of positive pressure may precipitate pulmonary edema.
+                        <span class="cite">Thille 2015; Villamizar 2025; Rady 1999</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_copd">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">COPD (especially with hypercapnia)</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-copd')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-copd">
+                        <strong>COPD: High-Risk Population</strong><br>
+                        Failure rates 14.7%-52% in COPD (vs 5-15% general ICU). Prophylactic NIV strongly beneficial.
+                        <span class="cite">Elkholy 2021; Robriquet 2006; Goharani 2019</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_mv_prolonged">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Prolonged MV (≥7 days) <span id="mv-auto-flag"></span></span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-mv')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-mv">
+                        <strong>Prolonged MV ≥7 days</strong><br>
+                        Defines "prolonged weaning" per ERS/WIND. Associated with respiratory muscle deconditioning.
+                        <span class="cite">Trudzinski 2022; Schönhofer 2020</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_difficult_wean">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Difficult weaning (≥2 failed SBTs) <span id="sbt-auto-flag"></span></span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-sbt-fail')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-sbt-fail">
+                        <strong>≥2 Failed SBTs: Difficult Weaning</strong><br>
+                        Multiple failures indicate underlying respiratory insufficiency or unresolved pathology.
+                        <span class="cite">Boles 2007; Torrini 2021</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_secretions">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">High secretion burden (>Q2h) <span id="secretion-auto-flag"></span></span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-secretions')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-secretions">
+                        <strong>Suctioning >Q2h = HIGH RISK</strong><br>
+                        High secretion burden (>12×/24h) strongly predicts failure with OR 10.65.
+                        <span class="cite">Haruna 2022; Hattori 2025</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_weak_cough">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Weak cough / unable to clear secretions</span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-cough')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-cough">
+                        <strong>Weak Cough: Airway Protection Risk</strong><br>
+                        Weak/absent cough is significant predictor of failure. Indicates inability to protect airway.
+                        <span class="cite">Elkholy 2021; Saltürk 2016; Thille 2016</span>
+                    </div>
+                    
+                    <label class="checkbox-item risk-check" onclick="toggleCheck(this, 'risk'); updateRiskCount()">
+                        <input type="checkbox" name="risk_fluid">
+                        <div class="check-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span class="label-text">Positive fluid balance >+1000 mL <span id="fluid-auto-flag"></span></span>
+                        <button class="info-btn" onclick="event.stopPropagation(); toggleEvidence('ev-fluid-risk')">i</button>
+                    </label>
+                    <div class="evidence-box" id="ev-fluid-risk">
+                        <strong>Fluid Balance Impact:</strong><br>
+                        >+1000 mL/24h = high specificity (84%) for failure. Consider diuresis optimization.
+                        <span class="cite">Wang 2024; Maezawa 2019</span>
+                    </div>
+                </div>
+
+                <div class="risk-summary standard" id="risk-summary">
+                    <div class="risk-count">0</div>
+                    <div class="risk-level">STANDARD RISK</div>
+                    <div class="risk-recommendation">Standard oxygen therapy post-extubation</div>
+                </div>
+            </section>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="assessFull()">Generate Extubation Plan</button>
+                <button class="btn-secondary" onclick="resetFull()">Reset All</button>
+            </div>
+
+            <div class="results" id="full-results"></div>
+        </div>
+
+        <footer class="footer">
+            <p><strong>ARISE v2.9</strong> — Evidence-Based ICU Liberation Support</p>
+            <p class="disclaimer">Clinical decision aid only. Always apply clinical judgment.</p>
+        </footer>
+    </div>
+
+    <script>
+// ARISE v2.8 - Evidence-Based Clinical Decision Support
+
+function setMode(mode) {
+    document.getElementById('sat-mode').classList.add('hidden');
+    document.getElementById('sbt-mode').classList.add('hidden');
+    document.getElementById('full-mode').classList.add('hidden');
+    
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.className = 'mode-btn';
+    });
+    
+    const statusBox = document.getElementById('status-box');
+    
+    if (mode === 'sat') {
+        document.getElementById('sat-mode').classList.remove('hidden');
+        document.getElementById('mode-sat').classList.add('active');
+        statusBox.className = 'status-box neutral';
+        statusBox.textContent = 'Complete SAT exclusion screening below';
+    } else if (mode === 'sbt') {
+        document.getElementById('sbt-mode').classList.remove('hidden');
+        document.getElementById('mode-sbt').classList.add('active');
+        document.getElementById('mode-sbt').classList.add('active-sbt');
+        statusBox.className = 'status-box purple';
+        statusBox.textContent = 'Enter SBT parameters below';
+        updateSBT();
+    } else {
+        document.getElementById('full-mode').classList.remove('hidden');
+        document.getElementById('mode-full').classList.add('active');
+        document.getElementById('mode-full').classList.add('active-full');
+        statusBox.className = 'status-box neutral';
+        statusBox.textContent = 'Complete pre-extubation assessment';
+        updateCalculations();
+    }
+}
+
+function toggleEvidence(id) {
+    const box = document.getElementById(id);
+    if (box) box.classList.toggle('show');
+}
+
+function toggleCheck(element, type) {
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    checkbox.checked = !checkbox.checked;
+    element.classList.toggle('checked', checkbox.checked);
+}
+
+function assessSAT() {
+    const exclusions = document.querySelectorAll('#sat-mode .checkbox-list input[type="checkbox"]:checked');
+    const resultsDiv = document.getElementById('sat-results');
+    const statusBox = document.getElementById('status-box');
+    
+    if (exclusions.length === 0) {
+        statusBox.className = 'status-box success';
+        statusBox.innerHTML = '✓ SAT ELIGIBLE — Stop sedation at 7:30am → Proceed to SBT';
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box success">
+                <h2>✓ Proceed with SAT</h2>
+                <p>No exclusion criteria present</p>
+            </div>
+            <div class="result-card success">
+                <h3>SAT Protocol</h3>
+                <ol>
+                    <li>Stop all continuous sedation and analgesia at <strong>7:30am</strong></li>
+                    <li>Monitor for SAT failure criteria:<br>
+                        • Severe agitation (RASS +3/+4) or Pain >5<br>
+                        • RR >35/min or SpO2 <90%<br>
+                        • HR >120 or new arrhythmia
+                    </li>
+                    <li>If SAT passes → Proceed to SBT screening at <strong>8:00am</strong></li>
+                </ol>
+            </div>
+        `;
+    } else {
+        statusBox.className = 'status-box danger';
+        statusBox.innerHTML = `✗ SAT NOT ELIGIBLE — ${exclusions.length} exclusion${exclusions.length > 1 ? 's' : ''} present`;
+        
+        let exclusionList = '';
+        exclusions.forEach(ex => {
+            exclusionList += `<li>✗ ${ex.closest('.checkbox-item').querySelector('.label-text').textContent}</li>`;
+        });
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box danger">
+                <h2>✗ SAT Contraindicated</h2>
+                <p>${exclusions.length} exclusion criteria present</p>
+            </div>
+            <div class="result-card danger">
+                <h3>Active Exclusions</h3>
+                <ul>${exclusionList}</ul>
+            </div>
+            <div class="result-card info">
+                <h3>Action Plan</h3>
+                <p>Continue current sedation. Address exclusions. Reassess at 7am tomorrow.</p>
+            </div>
+        `;
+    }
+}
+
+function resetSAT() {
+    document.querySelectorAll('#sat-mode .checkbox-item').forEach(item => {
+        item.classList.remove('checked');
+        item.querySelector('input').checked = false;
+    });
+    document.getElementById('sat-results').innerHTML = '';
+    document.getElementById('status-box').className = 'status-box neutral';
+    document.getElementById('status-box').textContent = 'Complete SAT exclusion screening below';
+}
+
+function updateSBT() {
+    const fio2 = parseFloat(document.getElementById('sbt-fio2').value) || 40;
+    const pao2 = parseFloat(document.getElementById('sbt-pao2').value) || 100;
+    const pfRatio = Math.round(pao2 / (fio2 / 100));
+    
+    const pfDisplay = document.getElementById('sbt-pf-value');
+    pfDisplay.textContent = pfRatio;
+    pfDisplay.className = pfRatio > 150 ? 'value good' : pfRatio > 100 ? 'value warning' : 'value danger';
+}
+
+function assessSBT() {
+    const fio2 = parseFloat(document.getElementById('sbt-fio2').value) || 40;
+    const peep = parseFloat(document.getElementById('sbt-peep').value) || 8;
+    const pao2 = parseFloat(document.getElementById('sbt-pao2').value) || 100;
+    const norad = parseFloat(document.getElementById('sbt-norad').value) || 0;
+    const pfRatio = Math.round(pao2 / (fio2 / 100));
+    
+    const barriers = [];
+    if (fio2 > 40) barriers.push(`FiO2 ${fio2}% (need ≤40%)`);
+    if (peep > 8) barriers.push(`PEEP ${peep} (need ≤8)`);
+    if (pfRatio <= 150) barriers.push(`P/F ${pfRatio} (need >150)`);
+    if (norad >= 0.1) barriers.push(`Norad ${norad} (need <0.1)`);
+    
+    const clinicalChecks = document.querySelectorAll('#sbt-mode .checkbox-item.yes-check.checked');
+    if (clinicalChecks.length < 4) {
+        barriers.push(`${4 - clinicalChecks.length} clinical readiness check${4 - clinicalChecks.length > 1 ? 's' : ''} not met`);
+    }
+    
+    const resultsDiv = document.getElementById('sbt-results');
+    const statusBox = document.getElementById('status-box');
+    
+    if (barriers.length === 0) {
+        statusBox.className = 'status-box success';
+        statusBox.innerHTML = '✓ SBT READY — Perform 30-min SBT at 8am';
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box success">
+                <h2>✓ Ready for SBT</h2>
+                <p>All criteria met — P/F ratio: ${pfRatio}</p>
+            </div>
+            <div class="result-card success">
+                <h3>SBT Protocol</h3>
+                <ol>
+                    <li><strong>Settings:</strong> FiO2 40%, PSV 5-10, PEEP 0</li>
+                    <li><strong>Duration:</strong> 30 minutes</li>
+                    <li><strong>Monitor for failure:</strong><br>
+                        • RR <8 or >35/min, respiratory distress<br>
+                        • SpO2 <90%<br>
+                        • SBP <90 or >200 mmHg<br>
+                        • HR <60 or >140/min
+                    </li>
+                    <li><strong>If passes:</strong> Proceed to extubation assessment</li>
+                </ol>
+            </div>
+        `;
+    } else {
+        statusBox.className = 'status-box danger';
+        statusBox.innerHTML = `✗ NOT READY FOR SBT — ${barriers.length} barrier${barriers.length > 1 ? 's' : ''}`;
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box danger">
+                <h2>✗ Not Ready for SBT</h2>
+                <p>Address ${barriers.length} barrier${barriers.length > 1 ? 's' : ''} first</p>
+            </div>
+            <div class="result-card danger">
+                <h3>Barriers to SBT</h3>
+                <ul>${barriers.map(b => `<li>✗ ${b}</li>`).join('')}</ul>
+            </div>
+            <div class="result-card info">
+                <h3>Action Plan</h3>
+                <p>Optimize parameters. Reassess in 4-6 hours or next morning.</p>
+            </div>
+        `;
+    }
+}
+
+function resetSBT() {
+    document.getElementById('sbt-fio2').value = 40;
+    document.getElementById('sbt-peep').value = 8;
+    document.getElementById('sbt-pao2').value = 100;
+    document.getElementById('sbt-norad').value = 0;
+    
+    document.querySelectorAll('#sbt-mode .checkbox-item.yes-check').forEach(item => {
+        item.classList.remove('checked');
+        item.querySelector('input').checked = false;
+    });
+    
+    document.getElementById('sbt-results').innerHTML = '';
+    document.getElementById('status-box').className = 'status-box purple';
+    document.getElementById('status-box').textContent = 'Enter SBT parameters below';
+    updateSBT();
+}
+
+function updateCalculations() {
+    const height = parseFloat(document.getElementById('height').value) || 170;
+    const weight = parseFloat(document.getElementById('weight').value) || 70;
+    const bmi = (weight / ((height/100) * (height/100))).toFixed(1);
+    document.getElementById('bmi-value').textContent = bmi;
+    
+    const fio2 = parseFloat(document.getElementById('full-fio2').value) || 40;
+    const pao2 = parseFloat(document.getElementById('full-pao2').value) || 100;
+    const pfRatio = Math.round(pao2 / (fio2 / 100));
+    
+    const pfDisplay = document.getElementById('full-pf-value');
+    pfDisplay.textContent = pfRatio;
+    pfDisplay.className = pfRatio > 150 ? 'value good' : pfRatio > 100 ? 'value warning' : 'value danger';
+    
+    const cuffLeak = parseFloat(document.getElementById('cuff-leak').value) || 150;
+    const cuffResult = document.querySelector('#cuff-result .value');
+    cuffResult.textContent = cuffLeak >= 110 ? '✓ PASS' : '✗ FAIL';
+    cuffResult.className = cuffLeak >= 110 ? 'value good' : 'value danger';
+    
+    // Auto-flags
+    document.getElementById('bmi-auto-flag').innerHTML = bmi > 30 ? '<span class="auto-badge">AUTO</span>' : '';
+    document.getElementById('mv-auto-flag').innerHTML = parseInt(document.getElementById('mv-days').value) >= 7 ? '<span class="auto-badge">AUTO</span>' : '';
+    document.getElementById('sbt-auto-flag').innerHTML = parseInt(document.getElementById('failed-sbt').value) >= 2 ? '<span class="auto-badge">AUTO</span>' : '';
+    const suctionFreq = document.getElementById('suction-freq').value;
+    document.getElementById('secretion-auto-flag').innerHTML = (suctionFreq === 'q2' || suctionFreq === 'q1') ? '<span class="auto-badge">AUTO</span>' : '';
+    document.getElementById('fluid-auto-flag').innerHTML = parseFloat(document.getElementById('fluid-balance').value) > 1000 ? '<span class="auto-badge">AUTO</span>' : '';
+    
+    const airwayRisk = document.querySelectorAll('input[name="airway_difficult"]:checked, input[name="airway_edema"]:checked, input[name="airway_osa"]:checked').length > 0 || cuffLeak < 110;
+    document.getElementById('airway-alert').classList.toggle('hidden', !airwayRisk);
+}
+
+function updateRiskCount() {
+    const count = document.querySelectorAll('#risk-checklist input[type="checkbox"]:checked').length;
+    const summary = document.getElementById('risk-summary');
+    
+    summary.querySelector('.risk-count').textContent = count;
+    
+    if (count === 0) {
+        summary.className = 'risk-summary standard';
+        summary.querySelector('.risk-level').textContent = 'STANDARD RISK';
+        summary.querySelector('.risk-recommendation').textContent = 'Standard oxygen therapy post-extubation';
+    } else if (count < 4) {
+        summary.className = 'risk-summary high-risk';
+        summary.querySelector('.risk-level').textContent = 'HIGH RISK';
+        summary.querySelector('.risk-recommendation').innerHTML = '<strong>HFNC or NIV</strong> recommended post-extubation';
+    } else {
+        summary.className = 'risk-summary very-high-risk';
+        summary.querySelector('.risk-level').textContent = 'VERY HIGH RISK';
+        summary.querySelector('.risk-recommendation').innerHTML = '<strong>NIV strongly recommended</strong> (superior to HFNC for ≥4 factors)';
+    }
+}
+
+function assessFull() {
+    const resultsDiv = document.getElementById('full-results');
+    const statusBox = document.getElementById('status-box');
+    
+    const fio2 = parseFloat(document.getElementById('full-fio2').value) || 40;
+    const peep = parseFloat(document.getElementById('full-peep').value) || 8;
+    const pao2 = parseFloat(document.getElementById('full-pao2').value) || 100;
+    const norad = parseFloat(document.getElementById('full-norad').value) || 0;
+    const pfRatio = Math.round(pao2 / (fio2 / 100));
+    const ph = parseFloat(document.getElementById('ph').value) || 7.4;
+    const hb = parseFloat(document.getElementById('hb').value) || 10;
+    const fluid = parseFloat(document.getElementById('fluid-balance').value) || 0;
+    const cuffLeak = parseFloat(document.getElementById('cuff-leak').value) || 0;
+    
+    const barriers = [];
+    if (fio2 > 40) barriers.push({ issue: `FiO2 ${fio2}%`, target: '≤40%', action: 'Wean FiO2' });
+    if (peep > 8) barriers.push({ issue: `PEEP ${peep}`, target: '≤8', action: 'Wean PEEP' });
+    if (pfRatio <= 150) barriers.push({ issue: `P/F ${pfRatio}`, target: '>150', action: 'Optimize oxygenation' });
+    if (norad >= 0.1) barriers.push({ issue: `Norad ${norad}`, target: '<0.1', action: 'Wean vasopressors' });
+    if (ph < 7.30) barriers.push({ issue: `pH ${ph}`, target: '≥7.30', action: 'Correct acidosis' });
+    if (hb < 7) barriers.push({ issue: `Hb ${hb}`, target: '≥7-8', action: 'Consider transfusion' });
+    if (fluid > 1500) barriers.push({ issue: `Fluid +${fluid}mL`, target: '≤+1000', action: 'Diuresis' });
+    
+    const riskCount = document.querySelectorAll('#risk-checklist input[type="checkbox"]:checked').length;
+    const airwayRisk = document.querySelectorAll('input[name="airway_difficult"]:checked, input[name="airway_edema"]:checked, input[name="airway_osa"]:checked').length > 0 || cuffLeak < 110;
+    
+    if (barriers.length === 0) {
+        statusBox.className = 'status-box success';
+        statusBox.innerHTML = `✓ READY FOR EXTUBATION — ${riskCount === 0 ? 'Standard' : riskCount < 4 ? 'High' : 'Very High'} Risk`;
+        
+        let postPlan = riskCount === 0 
+            ? `<div class="plan-item"><div class="plan-step">3</div><div class="plan-content"><h4>Post-Extubation: Standard Oxygen</h4><p>Nasal prongs or face mask, titrate to SpO2 ≥94%</p></div></div>`
+            : riskCount < 4
+            ? `<div class="plan-item"><div class="plan-step">3</div><div class="plan-content"><h4>Post-Extubation: HFNC or NIV</h4><p><strong>HFNC:</strong> Flow 40-60 L/min, FiO2 titrated<br><strong>NIV (if COPD):</strong> PS 8-12, PEEP 4-8</p></div></div>`
+            : `<div class="plan-item" style="background: var(--color-danger-bg);"><div class="plan-step" style="background: var(--color-danger);">3</div><div class="plan-content"><h4>Post-Extubation: NIV Strongly Recommended</h4><p><strong>NIV preferred over HFNC</strong> for ≥4 risk factors<br>Settings: PS 8-12, PEEP 4-8</p></div></div>`;
+        
+        let airwayPlan = airwayRisk ? `<div class="plan-item" style="background: var(--color-danger-bg);"><div class="plan-step" style="background: var(--color-danger);">!</div><div class="plan-content"><h4>⚠ High-Risk Airway</h4><p>Senior airway expert present • Video laryngoscope ready • Consider steroids if not given</p></div></div>` : '';
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box success"><h2>✓ Ready for Extubation</h2><p>${riskCount} risk factor${riskCount !== 1 ? 's' : ''} identified</p></div>
+            <div class="extubation-plan">
+                <h3>Extubation Plan</h3>
+                ${airwayPlan}
+                <div class="plan-item"><div class="plan-step">1</div><div class="plan-content"><h4>Pre-Extubation</h4><p>Suction ETT/oral cavity • HOB 30-45° • Emergency equipment ready</p></div></div>
+                <div class="plan-item"><div class="plan-step">2</div><div class="plan-content"><h4>Extubation</h4><p>Deflate cuff, remove ETT during expiration • Encourage cough</p></div></div>
+                ${postPlan}
+                <div class="plan-item"><div class="plan-step">4</div><div class="plan-content"><h4>Monitor (48h)</h4><p>RR, SpO2, work of breathing, stridor • Reintubation if: RR >35, SpO2 <90%</p></div></div>
+            </div>
+        `;
+    } else {
+        statusBox.className = 'status-box danger';
+        statusBox.innerHTML = `✗ NOT READY — ${barriers.length} barrier${barriers.length > 1 ? 's' : ''}`;
+        
+        resultsDiv.innerHTML = `
+            <div class="decision-box danger"><h2>✗ Not Ready for Extubation</h2><p>Address ${barriers.length} barrier${barriers.length > 1 ? 's' : ''}</p></div>
+            <div class="extubation-plan">
+                <h3>Required Optimizations</h3>
+                ${barriers.map(b => `<div class="plan-item" style="background: var(--color-danger-bg);"><div class="plan-content" style="width:100%;"><h4>✗ ${b.issue} → ${b.target}</h4><p><strong>Action:</strong> ${b.action}</p></div></div>`).join('')}
+            </div>
+            <div class="result-card info"><h3>Action Plan</h3><p>Address barriers above. Re-assess in 4-6 hours or next morning.</p></div>
+        `;
+    }
+}
+
+function resetFull() {
+    document.getElementById('height').value = 170;
+    document.getElementById('weight').value = 70;
+    document.getElementById('age').value = 60;
+    document.getElementById('mv-days').value = 3;
+    document.getElementById('full-fio2').value = 40;
+    document.getElementById('full-peep').value = 8;
+    document.getElementById('full-pao2').value = 100;
+    document.getElementById('full-norad').value = 0;
+    document.getElementById('failed-sbt').value = '0';
+    document.getElementById('suction-freq').value = 'q4';
+    document.getElementById('ph').value = 7.40;
+    document.getElementById('hb').value = 10;
+    document.getElementById('fluid-balance').value = 0;
+    document.getElementById('ett-size').value = 7.5;
+    document.getElementById('cuff-leak').value = 150;
+    
+    document.querySelectorAll('#full-mode .checkbox-item').forEach(item => {
+        item.classList.remove('checked');
+        item.querySelector('input').checked = false;
+    });
+    
+    document.getElementById('full-results').innerHTML = '';
+    updateCalculations();
+    updateRiskCount();
+    
+    document.getElementById('status-box').className = 'status-box neutral';
+    document.getElementById('status-box').textContent = 'Complete pre-extubation assessment';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setMode('sat');
+});
+    </script>
+</body>
+</html>
