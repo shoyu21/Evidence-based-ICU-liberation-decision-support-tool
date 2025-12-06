@@ -35,7 +35,7 @@ All clinical thresholds are supported by peer-reviewed research including:
 
 This software is proprietary. Unauthorized copying, modification, or distribution is prohibited. 
 
-For licensing and subscription inquiries, please contact: [Your Email]
+For licensing and subscription inquiries, please contact: ccx2211@gmail.com
 
 ## Disclaimer
 
